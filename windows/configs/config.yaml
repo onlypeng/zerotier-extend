@@ -1,0 +1,25 @@
+version: 3
+app:
+  checkInterval: 60
+  logMaxLines: 3000
+  logFilePath: "run.log"
+  ipFilePath: "ips.txt"
+  serverIPsPath: "server_ips.txt"
+server:
+  domain: "域名"
+  ipsUrl: "https://域名/ips?key=SECRET_KEY"
+  planetUrl: "https://域名/planet?key=SECRET_KEY"
+
+zerotier:
+  serviceName: "ZeroTierOneService"
+  planetPath: "C:/ProgramData/ZeroTier/One/planet"
+  
+service:
+  name: "ZeroTierExtendService"
+  displayName: "ZeroTierExtendService"
+  description: "ZeroTier扩展，用于未固定IP的节点,根据域名变化更新planet文件"
+  options:
+    onFailure: "restart"
+    failureResetPeriod: 60
+    failureRestartInterval: 10
+

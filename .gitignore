@@ -1,0 +1,5 @@
+windows/scripts/config.yaml
+windows/scripts/ips.txt
+windows/scripts/run.log
+windows/scripts/server_ips.txt
+linux/update_planet copy.sh
