@@ -1,21 +1,21 @@
 @echo off
-REM ZerotierExtend ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ½Å±ï¿½
-REM ï¿½ï¿½ï¿½ï¿½Ê½ï¿½Ëµï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½
+REM ZerotierExtend ·þÎñ¿ØÖÆ½Å±¾
+REM ½»»¥Ê½²Ëµ¥£¬ÓÃ»§Ñ¡Ôñ²Ù×÷
 set EXE_PATH=.\update_planet.exe
 
 :menu
 cls
 echo ==============================
-echo ZerotierExtend ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ²Ëµï¿½
+echo ZerotierExtend ·þÎñ¿ØÖÆ²Ëµ¥
 echo ==============================
-echo 1. ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½
-echo 2. Ð¶ï¿½Ø·ï¿½ï¿½ï¿½
-echo 3. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-echo 4. Í£Ö¹ï¿½ï¿½ï¿½ï¿½
-echo 5. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-echo 6. ï¿½Ë³ï¿½
+echo 1. °²×°·þÎñ
+echo 2. Ð¶ÔØ·þÎñ
+echo 3. Æô¶¯·þÎñ
+echo 4. Í£Ö¹·þÎñ
+echo 5. ÖØÆô·þÎñ
+echo 6. ÍË³ö
 echo ==============================
-set /p choice=ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ (1-6): 
+set /p choice=ÇëÑ¡Ôñ²Ù×÷ (1-6): 
 
 if "%choice%"=="1" goto install
 if "%choice%"=="2" goto uninstall
@@ -24,7 +24,7 @@ if "%choice%"=="4" goto stop
 if "%choice%"=="5" goto restart
 if "%choice%"=="6" exit /b 0
 
-echo ï¿½ï¿½Ð§ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1 ï¿½ï¿½ 6 Ö®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¡ï¿½
+echo ÎÞÐ§µÄÑ¡Ôñ£¬ÇëÊäÈë 1 µ½ 6 Ö®¼äµÄÊý×Ö¡£
 pause
 goto menu
 
