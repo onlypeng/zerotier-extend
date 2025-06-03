@@ -6,9 +6,9 @@ import (
 	"os"
 	"time"
 
-	config "zerotierextend/internal/config"
-	logger "zerotierextend/internal/logger"
-	myservice "zerotierextend/internal/service"
+	config "github.com/onlypeng/zerotier-extend/windows/internal/config"
+	logger "github.com/onlypeng/zerotier-extend/windows/internal/logger"
+	myservice "github.com/onlypeng/zerotier-extend/windows/internal/service"
 
 	"github.com/kardianos/service"
 )
@@ -19,17 +19,15 @@ func main() {
 	if err != nil {
 		log.Fatalf("加载配置失败: %v", err)
 	}
-	log.Println("配置文件初始化成功")
 
 	logFile, err := logger.InitLog(cfg.AppConfig.LogFilePath, cfg.AppConfig.LogMaxLines)
 	if err != nil {
-		log.Fatalf("设置日志失败: %v", err)
+		log.Fatalf("日志初始化失败: %v", err)
 	}
 	defer logFile.Close()
-	log.Println("日志初始化成功")
 
 	serviceConfig := cfg.ServiceConfig
-	svcConfig := &service.Config{
+	zerotierExtendConfig := &service.Config{
 		Name:        serviceConfig.Name,
 		DisplayName: serviceConfig.DisplayName,
 		Description: serviceConfig.Description,
@@ -45,7 +43,8 @@ func main() {
 		log.Printf("创建服务失败: %v", err)
 		return
 	}
-	s, err := service.New(prg, svcConfig)
+	
+	zerotierExtendService, err := service.New(prg, zerotierExtendConfig)
 
 	if err != nil {
 		log.Printf("创建服务失败: %v", err)
@@ -55,7 +54,7 @@ func main() {
 	// 处理命令行参数
 	if len(os.Args) > 1 {
 		cmd := os.Args[1]
-		status, err := s.Status()
+		status, err := zerotierExtendService.Status()
 		if err != nil && err != service.ErrNotInstalled {
 			log.Printf("获取服务状态失败: %v\n", err)
 			return
@@ -63,7 +62,7 @@ func main() {
 		if status == service.StatusUnknown {
 			if cmd == "install" {
 				log.Println("开始安装服务...")
-				err = s.Install()
+				err = zerotierExtendService.Install()
 				if err != nil {
 					log.Printf("安装服务失败: %v\n", err)
 					return
@@ -81,7 +80,7 @@ func main() {
 			// 如果服务正在运行，先停止服务
 			if status == service.StatusRunning {
 				log.Println("服务正在运行，开始停止服务...")
-				err = s.Stop()
+				err = zerotierExtendService.Stop()
 				if err != nil {
 					log.Printf("停止服务失败: %v\n", err)
 					return
@@ -91,7 +90,7 @@ func main() {
 
 			// 开始卸载服务
 			log.Println("开始卸载服务...")
-			err = s.Uninstall()
+			err = zerotierExtendService.Uninstall()
 			if err != nil {
 				log.Printf("卸载服务失败: %v\n", err)
 				return
@@ -103,7 +102,7 @@ func main() {
 				return
 			}
 			log.Println("开始启动服务...")
-			err = s.Start()
+			err = zerotierExtendService.Start()
 			if err != nil {
 				log.Printf("启动服务失败: %v\n", err)
 			} else {
@@ -115,7 +114,7 @@ func main() {
 				return
 			}
 			log.Println("开始停止服务...")
-			err = s.Stop()
+			err = zerotierExtendService.Stop()
 			if err != nil {
 				log.Printf("停止服务失败: %v\n", err)
 			} else {
@@ -127,7 +126,7 @@ func main() {
 				return
 			}
 			log.Println("开始重启服务...")
-			err = s.Restart()
+			err = zerotierExtendService.Restart()
 			if err != nil {
 				log.Printf("重启服务失败: %v\n", err)
 			} else {
@@ -140,7 +139,7 @@ func main() {
 		return
 	}
 	// 没有参数，直接运行服务（交给 SCM 管理）
-	err = s.Run()
+	err = zerotierExtendService.Run()
 	if err != nil {
 		log.Fatalf("服务运行失败: %v", err)
 	}

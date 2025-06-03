@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"log"
 	"time"
-	"zerotierextend/internal/config"
-	myutiles "zerotierextend/internal/utiles"
+
+	config "github.com/onlypeng/zerotier-extend/windows/internal/config"
+	myutiles "github.com/onlypeng/zerotier-extend/windows/internal/utiles"
 
 	"github.com/kardianos/service"
 )
@@ -41,6 +42,7 @@ func (p *ProgramImpl) Stop(s service.Service) error {
 func (p *ProgramImpl) doCheck(config *config.Config) {
 	appConfig := config.AppConfig
 	serverConfig := config.ServerConfig
+	zeroTierConfig := config.ZeroTierConfig
 	checkInterval := appConfig.CheckInterval
 
 	// 1. 检查服务状态
@@ -76,20 +78,21 @@ func (p *ProgramImpl) doCheck(config *config.Config) {
 	}
 	log.Printf("服务器文件已更新，开始更新planet文件")
 	// 5. 下载并planet文件
-	if err := myutiles.Download(serverConfig.PlanetURL, config.ZeroTierConfig.PlanetPath); err != nil {
+	if err := myutiles.Download(serverConfig.PlanetURL, zeroTierConfig.PlanetPath); err != nil {
 		log.Printf("下载planet文件失败: %v\n", err)
 		return
 	}
 	log.Printf("下载planet文件成功")
 	// 6. 替换planet文件
-	if err := myutiles.ReplacePlanetFile(config.ZeroTierConfig.PlanetPath); err != nil {
+	if err := myutiles.ReplacePlanetFile(zeroTierConfig.PlanetPath); err != nil {
 		log.Printf("替换planet文件失败: %v\n", err)
 		return
 	}
 	log.Printf("替换planet文件成功")
 	// 7. 重启服务
+	log.Printf("等待%v服务重启...", zeroTierConfig.ServiceName)
 	err = p.zerotierService.Restart()
-	if err := p.zerotierService.Start(); err != nil {
+	if err != nil {
 		log.Printf("重启服务失败: %v\n", err)
 		return
 	}

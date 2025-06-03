@@ -1,7 +1,8 @@
 @echo off
+chcp 936 >nul
 REM ZerotierExtend 服务控制脚本
 REM 交互式菜单，用户选择操作
-set EXE_PATH=.\update_planet.exe
+set EXE_PATH=%~dp0update_planet.exe
 
 :menu
 cls
