@@ -15,8 +15,20 @@ EXTEND_SERVER="zerotier_extend"
 LOG_FILE_PATH="log.txt"
 LOCAL_IPS_PATH="ips.txt"
 SERVER_IPS_PATH="server_ips.txt"
-BACKUP_PLANET_PATH="${PLANET_PATH}.bak"
 
+# 获取当前脚本的绝对路径
+SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
+
+# 修正相对路径
+paths="LOG_FILE_PATH LOCAL_IPS_PATH SERVER_IPS_PATH"
+for var in $paths; do
+    value=$(eval echo "\$$var")
+    if [ "${value#/}" = "$value" ]; then
+        eval "$var=\"${SCRIPT_DIR}/${value}\""
+    fi
+done
+
+BACKUP_PLANET_PATH="${PLANET_PATH}.bak"
 
 # === 日志 ===
 log() {
