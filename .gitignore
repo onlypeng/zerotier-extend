@@ -1,5 +1,4 @@
-windows/scripts/config.yaml
-windows/scripts/ips.txt
-windows/scripts/run.log
-windows/scripts/server_ips.txt
-linux/update_planet copy.sh
+windows/cmd/zerotierextend/ips.txt
+windows/cmd/zerotierextend/run.log
+windows/cmd/zerotierextend/server_ips.txt
+windows/cmd/zerotierextend/config.yaml
