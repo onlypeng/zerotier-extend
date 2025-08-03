@@ -110,14 +110,14 @@ func (p *ProgramImpl) run() {
 	checkInterval := config.AppConfig.CheckInterval
 	ticker := time.NewTicker(time.Duration(checkInterval) * time.Second)
 	defer ticker.Stop()
-	p.doCheck(p.config)
+	p.doCheck(config)
 	for {
 		select {
 		case <-p.exit:
 			fmt.Println("服务收到退出信号，停止检测循环")
 			return
 		case <-ticker.C:
-			p.doCheck(p.config)
+			p.doCheck(config)
 		}
 	}
 }
